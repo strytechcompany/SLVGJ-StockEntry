@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Curator Inventory - Dashboard</title>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "gold": {
+                50: "#fdfbed",
+                100: "#fbf6d1",
+                200: "#f6eaa4",
+                300: "#f0d86b",
+                400: "#e9c13e",
+                500: "#d4af37", // Primary Gold
+                600: "#b88b2b",
+                700: "#946725",
+                800: "#7a5424",
+                900: "#684621",
+              },
+              "stone": {
+                50: "#fafaf9",
+                100: "#f5f5f4",
+                200: "#e7e5e4",
+                300: "#d6d3d1",
+                400: "#a8a29e",
+                500: "#78716c",
+                600: "#57534e",
+                700: "#44403c",
+                800: "#292524",
+                900: "#1c1917",
+                950: "#0c0a09",
+              },
+              "primary": "#d4af37",
+              "on-primary": "#ffffff",
+              "background": "#fafaf9",
+              "surface": "#ffffff",
+              "outline": "#e7e5e4",
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "1rem",
+              "full": "9999px",
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        /* Custom scrollbar for better aesthetic */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fafaf9; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900 font-body">
+<!-- Top Navigation Bar (Based on TopAppBar component) -->
+<header class="flex justify-between items-center w-full px-8 h-16 sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-stone-200/20 shadow-sm shadow-stone-200/50">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-stone-900 font-headline">Gilded Inventory</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-stone-100 border-none rounded-lg text-sm w-64 focus:ring-1 focus:ring-gold-500 transition-all font-body" placeholder="Search inventory..." type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center space-x-8 font-headline text-sm font-semibold tracking-tight">
+<a class="text-gold-600 border-b-2 border-gold-600 pb-1" href="#">Dashboard</a>
+<a class="text-stone-500 hover:text-gold-600 transition-colors duration-300" href="#">Inventory</a>
+<a class="text-stone-500 hover:text-gold-600 transition-colors duration-300" href="#">Suppliers</a>
+<a class="text-stone-500 hover:text-gold-600 transition-colors duration-300" href="#">Reports</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="p-2 hover:bg-stone-100 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined text-stone-600">notifications</span>
+</button>
+<button class="p-2 hover:bg-stone-100 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined text-stone-600">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gold-100 flex items-center justify-center overflow-hidden border border-gold-200">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa4DCrGDuMgLyusC8Iumy9_nZqj1tnTEvXF4DlzCJWJn3xZsdX693tNh6Z762ISzQpaOfiFqtRFEzRtGFp_RIisdhNslcPqK6pIQ0ddlnW9mI495qr0PkmyDe5-jFh4PRrCeLwn9V9_dJuvFe6Q3R-GncIyqA-MZZH36YyVdc0-pQmhJFCFnG7bWXLrOWpqO9ZM6Nyg1bBWhWOxuqn-ohiKnKGj-wfBbSJGWE50yDZb0sBZ4czssygTm1ylfE3_Z7GRWH02ZWJbJk"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- Side Navigation Bar (Based on SideNavBar component) -->
+<aside class="w-64 fixed left-0 top-16 h-[calc(100vh-64px)] flex flex-col py-8 bg-stone-50 border-r border-stone-200">
+<div class="mb-8 px-6">
+<h2 class="font-headline font-black text-stone-900 text-lg">The Curator</h2>
+<p class="font-headline uppercase tracking-widest text-[10px] font-bold text-stone-400">Luxury Assets Admin</p>
+</div>
+<div class="space-y-1 px-3">
+<a class="flex items-center space-x-3 p-3 text-gold-600 border-r-2 border-gold-600 bg-white font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-stone-400 hover:text-stone-900 hover:bg-white/50 transition-all duration-200 font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg text-stone-300">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-stone-400 hover:text-stone-900 hover:bg-white/50 transition-all duration-200 font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg text-stone-300">inventory</span>
+<span>Suppliers</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-stone-400 hover:text-stone-900 hover:bg-white/50 transition-all duration-200 font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg text-stone-300">analytics</span>
+<span>Reports</span>
+</a>
+</div>
+<div class="mt-8 pt-8 border-t border-stone-200 px-3 space-y-1">
+<a class="flex items-center space-x-3 p-3 text-stone-400 hover:text-stone-900 hover:bg-white/50 transition-all duration-200 font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg text-stone-300">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-stone-400 hover:text-stone-900 hover:bg-white/50 transition-all duration-200 font-headline uppercase tracking-widest text-[11px] font-bold" href="#">
+<span class="material-symbols-outlined text-lg text-stone-300">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+<div class="mt-auto px-4">
+<button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gold-500 text-white font-headline uppercase tracking-widest text-[11px] font-black rounded hover:bg-gold-600 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm">add</span>
+                Create Entry
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-10 bg-stone-50">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight text-stone-900 font-headline mb-3">Inventory Dashboard</h1>
+<div class="flex items-center gap-3">
+<span class="bg-gold-50 border border-gold-200 px-3 py-1 rounded text-[10px] font-black tracking-widest uppercase text-gold-700 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-gold-500"></span>
+                        482 TOTAL PRODUCTS
+                    </span>
+<span class="text-stone-400 text-xs font-medium uppercase tracking-wider">Last updated: Oct 24, 14:30</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-white text-stone-700 border border-stone-200 font-bold text-xs uppercase tracking-widest rounded shadow-sm hover:bg-stone-50 transition-all">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filters
+                </button>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-gold-500 text-white font-black text-xs uppercase tracking-widest rounded shadow-md shadow-gold-200 hover:bg-gold-600 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Export PDF
+                </button>
+</div>
+</div>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<div class="p-8 bg-white rounded-xl border border-stone-200 border-b-4 border-b-gold-200 shadow-sm">
+<p class="text-stone-400 text-[10px] font-black tracking-[0.2em] mb-4 uppercase">Valuation</p>
+<h3 class="text-3xl font-extrabold text-stone-900 font-headline">$142,500.00</h3>
+<div class="mt-4 flex items-center text-[11px] text-green-600 font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+                    +12.5% vs last month
+                </div>
+</div>
+<div class="p-8 bg-white rounded-xl border border-stone-200 border-b-4 border-b-gold-200 shadow-sm">
+<p class="text-stone-400 text-[10px] font-black tracking-[0.2em] mb-4 uppercase">Stock Health</p>
+<h3 class="text-3xl font-extrabold text-stone-900 font-headline">94.2%</h3>
+<div class="mt-4 flex items-center text-[11px] text-gold-600 font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm mr-1">warning</span>
+                    8 items low on stock
+                </div>
+</div>
+<div class="p-8 bg-gold-500 text-white rounded-xl shadow-xl shadow-gold-200/40 relative overflow-hidden border border-gold-600">
+<div class="relative z-10">
+<p class="text-gold-100 text-[10px] font-black tracking-[0.2em] mb-4 uppercase">Active Suppliers</p>
+<h3 class="text-3xl font-extrabold font-headline">24</h3>
+<p class="mt-4 text-[11px] opacity-80 uppercase tracking-widest font-bold">3 pending deliveries today</p>
+</div>
+<div class="absolute -right-6 -bottom-6 opacity-10">
+<span class="material-symbols-outlined text-[120px]">local_shipping</span>
+</div>
+</div>
+</div>
+<!-- Main Table Container -->
+<div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+<!-- Filters Bar -->
+<div class="flex items-center justify-between p-6 border-b border-stone-100 bg-stone-50/50">
+<div class="flex gap-4">
+<select class="bg-white border border-stone-200 text-[10px] font-black uppercase tracking-widest text-stone-600 rounded px-4 py-2 focus:ring-1 focus:ring-gold-500 focus:border-gold-500 outline-none">
+<option>All Suppliers</option>
+<option>Regal Gems Co.</option>
+<option>Silver Lining LTD</option>
+<option>Pure Carat Wholesalers</option>
+</select>
+<select class="bg-white border border-stone-200 text-[10px] font-black uppercase tracking-widest text-stone-600 rounded px-4 py-2 focus:ring-1 focus:ring-gold-500 focus:border-gold-500 outline-none">
+<option>Net Weight: Any</option>
+<option>0 - 10g</option>
+<option>10 - 50g</option>
+<option>50g+</option>
+</select>
+<button class="bg-white border border-stone-200 text-[10px] font-black uppercase tracking-widest text-stone-600 rounded px-4 py-2 hover:bg-stone-50 flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                        Date Range
+                    </button>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Showing 1-10 of 482 entries</span>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-stone-400 uppercase text-[10px] font-black tracking-[0.2em] bg-stone-50/30 border-b border-stone-100">
+<th class="px-8 py-4 font-black">Item Number</th>
+<th class="px-8 py-4 font-black">Product Name</th>
+<th class="px-8 py-4 font-black">Net Weight</th>
+<th class="px-8 py-4 font-black">Supplier Name</th>
+<th class="px-8 py-4 font-black">Entry Date</th>
+<th class="px-8 py-4 text-right font-black">Actions</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-stone-50">
+<!-- Row 1 -->
+<tr class="hover:bg-gold-50/40 transition-colors group cursor-default">
+<td class="px-8 py-5 font-headline font-bold text-stone-900">#INV-001</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded border border-stone-200 bg-stone-100 overflow-hidden">
+<img alt="Gold Necklace" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVsp3U56tyqP3EPggmwag2TNgt3TRMV7LCZUC0kpXchWM_IpHIXf3SYyywuhbA2ZplX4UJyYhL98awn4UlHcmx5Ndsmjm7-Khgkg2Fzhcvv1-rDWxqeVsXXdvR_ZWKXjg704NlkOW_dCqxeA_Xkxys7kdVVz9Owrstsir9g-khH4WGxsF8kRhGI6emmWizNBcmmWVam7gDb1Al0qSvreo6M_E2lGvbDXiBV140N-8dw3UdSiOn67XAaB70f2WF6nGpL5mbH_wBZFI"/>
+</div>
+<span class="font-bold text-stone-900">Gold Necklace</span>
+</div>
+</td>
+<td class="px-8 py-5 font-medium text-stone-500">14.50g</td>
+<td class="px-8 py-5 text-stone-500">Regal Gems Co.</td>
+<td class="px-8 py-5 text-stone-500">
+<div class="flex flex-col">
+<span class="font-bold">Oct 24, 2023</span>
+<span class="text-[10px] text-stone-400">10:45 AM</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gold-50/40 transition-colors group cursor-default">
+<td class="px-8 py-5 font-headline font-bold text-stone-900">#INV-002</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded border border-stone-200 bg-stone-100 overflow-hidden">
+<img alt="Silver Ring" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa8LiiIfmuSTgaM2CoyHtmPvhzN-A0uQT0XOMIGW4R7ytXGQa5W5NN7SBdIEWUTTQJk3WU_ocH1_S_NxeJwezHkVjuP-Df-Nz5TMqpHc95C2ABwuVHST_EJDsrllgx1eblqB8Fg7aTOqUfWvz0PUFGl7KXbhgkiGgr3LAmhlZvzBTC8b5xrRabs5LmSOIbF6R3SWy7rrk1pSLEQ3_oi8gWo-DP5yi_HMGj4uE1xiqdCcUH_8ioV3vepWM5iarMEhOEPBLfTqu2PbI"/>
+</div>
+<span class="font-bold text-stone-900">Silver Ring</span>
+</div>
+</td>
+<td class="px-8 py-5 font-medium text-stone-500">4.20g</td>
+<td class="px-8 py-5 text-stone-500">Silver Lining LTD</td>
+<td class="px-8 py-5 text-stone-500">
+<div class="flex flex-col">
+<span class="font-bold">Oct 23, 2023</span>
+<span class="text-[10px] text-stone-400">03:15 PM</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gold-50/40 transition-colors group cursor-default">
+<td class="px-8 py-5 font-headline font-bold text-stone-900">#INV-003</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded border border-stone-200 bg-stone-100 overflow-hidden">
+<img alt="Diamond Studs" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZe2UiSMKjwd9nw_jE7wsLa8rQo3luhQyj7qZhE0_ke4SjoGhJRmJgcYS1aUXYsicao4Yhx5EY90aD99iDR6Wn8xGSRZxz2aDM4dF0G7woIpx6BwJ-_-_W5gmOImitQ201kiYsoG1hwaADO2J17urIob1CcgkRxV8PpLyLYSaEY--e7kzbHQAGfLoxn1eTBPZiWWBoPvUiSFLzMp6ToYDxDyXYf_R7Znv9jSEXElpH0ZEE0JPSfQ2wkv67feKuf-AQIEtsI5Dntzw"/>
+</div>
+<span class="font-bold text-stone-900">Diamond Studs</span>
+</div>
+</td>
+<td class="px-8 py-5 font-medium text-stone-500">2.15g</td>
+<td class="px-8 py-5 text-stone-500">Pure Carat Wholesalers</td>
+<td class="px-8 py-5 text-stone-500">
+<div class="flex flex-col">
+<span class="font-bold">Oct 23, 2023</span>
+<span class="text-[10px] text-stone-400">09:00 AM</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-gold-50/40 transition-colors group cursor-default">
+<td class="px-8 py-5 font-headline font-bold text-stone-900">#INV-004</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded border border-stone-200 bg-stone-100 overflow-hidden">
+<img alt="Platinum Band" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeid6kxFyl3neXgFVVzd4ORFnNzEYputdkaV5Lh5SdqZznsY2VEkqESmunUsg1VyVOzn0_W2WsgTb10oP_qWWZTlmBvxqtpfDuMOThVu8AOdUIIxckPZXp_I2srr6XCnzUdAq12qfQVLDLk5ODkENRNEZ6DNlbzvoQZUogqJlb4AISUH51_fvRSPGfzIk9x1MkLEJbTryvm2DCtRgfsxl8p7AO6hiMOEPwikyUwaCoxjaSXm87oLSdRw5KVvmR8KtknYwcatRq-3s"/>
+</div>
+<span class="font-bold text-stone-900">Platinum Band</span>
+</div>
+</td>
+<td class="px-8 py-5 font-medium text-stone-500">8.90g</td>
+<td class="px-8 py-5 text-stone-500">Regal Gems Co.</td>
+<td class="px-8 py-5 text-stone-500">
+<div class="flex flex-col">
+<span class="font-bold">Oct 22, 2023</span>
+<span class="text-[10px] text-stone-400">02:30 PM</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-2 opacity-0 group-hover:opacity-100 hover:text-gold-600 transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between p-6 bg-stone-50/50 border-t border-stone-100">
+<span class="text-[10px] font-bold uppercase tracking-widest text-stone-400">Page 1 of 48</span>
+<div class="flex items-center gap-1">
+<button class="p-2 rounded hover:bg-white hover:text-gold-600 transition-all text-stone-400">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-gold-500 text-white font-black text-[10px]">1</button>
+<button class="w-8 h-8 rounded bg-white text-stone-600 font-bold text-[10px] hover:text-gold-600 transition-all border border-stone-100">2</button>
+<button class="w-8 h-8 rounded bg-white text-stone-600 font-bold text-[10px] hover:text-gold-600 transition-all border border-stone-100">3</button>
+<span class="px-2 text-stone-400 text-[10px]">...</span>
+<button class="w-8 h-8 rounded bg-white text-stone-600 font-bold text-[10px] hover:text-gold-600 transition-all border border-stone-100">48</button>
+<button class="p-2 rounded hover:bg-white hover:text-gold-600 transition-all text-stone-400">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 flex items-center justify-center w-14 h-14 bg-gold-500 text-white rounded-full shadow-2xl shadow-gold-500/40 hover:scale-105 active:scale-95 transition-all z-50 group border border-gold-400">
+<span class="material-symbols-outlined text-2xl transition-transform group-hover:rotate-90">add</span>
+</button>
+<!-- Contextual Toast/Notification (Glassmorphism) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-panel border border-gold-200/30 px-6 py-3 rounded-full shadow-lg flex items-center gap-3 z-40">
+<span class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span>
+<span class="text-[10px] font-black uppercase tracking-[0.1em] text-gold-700">Dashboard Live - Streaming real-time updates from 2 active terminals</span>
+</div>
+</body></html>

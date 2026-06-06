@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Stock Entry | Gilded Inventory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#f9f9f9",
+                        "background": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "tertiary": "#5d5f5f",
+                        "on-background": "#1a1c1c",
+                        "surface-container-low": "#f3f3f3",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#e9c349",
+                        "tertiary-container": "#b2b3b3",
+                        "surface-dim": "#dadada",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "surface-container-high": "#e8e8e8",
+                        "primary-fixed-dim": "#e9c349",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#656464",
+                        "surface-container": "#eeeeee",
+                        "secondary": "#5f5e5e",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-primary-container": "#554300",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "outline": "#7f7663",
+                        "on-tertiary-container": "#434546",
+                        "primary-container": "#d4af37",
+                        "primary": "#735c00",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-tint": "#735c00",
+                        "on-primary-fixed": "#241a00",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "secondary-container": "#e4e2e1",
+                        "inverse-on-surface": "#f0f1f1",
+                        "primary-fixed": "#ffe088",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1a1c1c",
+                        "outline-variant": "#d0c5af",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed": "#e4e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#4d4635",
+                        "surface-variant": "#e2e2e2",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed-variant": "#574500",
+                        "on-secondary-fixed-variant": "#474747"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(208, 197, 175, 0.2);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #735C00 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-stone-200/20 bg-stone-50 py-6 px-4 shrink-0">
+<div class="flex items-center gap-3 px-2 mb-10">
+<div class="w-8 h-8 gold-gradient rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">diamond</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-stone-800 tracking-tighter">Aurelian Reserve</h1>
+<p class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Premium Management</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 text-stone-400 hover:text-yellow-600 hover:bg-stone-100 transition-colors group" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-manrope label-md uppercase tracking-widest">Vault</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 text-yellow-600 font-bold bg-white shadow-sm transition-colors group" href="#">
+<span class="material-symbols-outlined">diamond</span>
+<span class="font-manrope label-md uppercase tracking-widest">Collections</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 text-stone-400 hover:text-yellow-600 hover:bg-stone-100 transition-colors group" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-manrope label-md uppercase tracking-widest">Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 text-stone-400 hover:text-yellow-600 hover:bg-stone-100 transition-colors group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-manrope label-md uppercase tracking-widest">Curators</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 text-stone-400 hover:text-yellow-600 hover:bg-stone-100 transition-colors group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-manrope label-md uppercase tracking-widest">Archive</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-stone-200/40 space-y-1">
+<button class="w-full gold-gradient text-white py-3 mb-6 font-bold tracking-tight rounded-sm shadow-lg shadow-primary/10 active:scale-95 transition-transform uppercase text-xs">
+                New Asset
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-400 hover:text-yellow-600 transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="label-md uppercase tracking-widest text-[11px]">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-stone-400 hover:text-yellow-600 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="label-md uppercase tracking-widest text-[11px]">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto relative pb-12">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 z-50 bg-white/80 backdrop-blur-xl border-b border-stone-200/20 px-8 py-4 flex justify-between items-center shadow-sm">
+<div class="flex items-center gap-6">
+<h2 class="font-manrope tracking-tight headline-sm text-stone-900 font-bold">New Stock Entry</h2>
+<nav class="hidden lg:flex items-center gap-8 ml-4">
+<a class="text-stone-500 hover:text-stone-900 transition-opacity text-sm font-medium" href="#">Dashboard</a>
+<a class="text-yellow-600 border-b-2 border-yellow-600 pb-1 text-sm font-medium" href="#">Inventory</a>
+<a class="text-stone-500 hover:text-stone-900 transition-opacity text-sm font-medium" href="#">Valuations</a>
+<a class="text-stone-500 hover:text-stone-900 transition-opacity text-sm font-medium" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-stone-500 hover:text-stone-900 transition-colors">notifications</button>
+<button class="material-symbols-outlined text-stone-500 hover:text-stone-900 transition-colors">settings</button>
+<div class="h-8 w-8 rounded-full bg-stone-200 overflow-hidden border border-stone-300/30">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="professional headshot of a curator in a well-lit studio setting with neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuxQqTuWuUjp6zgycEOsnGD0jklDtvWvGhm1hSoazFawzpJu1j-qjjTKxX2vx51X0o31-P-cNvj2hgm4DbytUq6VLfgHI7uyNppOC7jnP3SFwg-kfF965HhZ8PG7CBZQbc6NXnHP8PtNmzIXPHtgguK6AzQWT1r0yo5chebZ7c3pELWurLOKI6AH_h6-9W2Lpg0KnD_UottDz_nb_1JxF5HCUeA3xF5ip1jx8b_w8T-vGcHTrKMwK-DWTgC-3tBqPqzy58z4SwTqE"/>
+</div>
+</div>
+</header>
+<!-- Form Content -->
+<div class="mt-24 px-8 max-w-6xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+<!-- Left Column: Form Sections -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Section: Basic Info -->
+<section>
+<div class="flex items-baseline gap-4 mb-6">
+<h3 class="headline-sm font-bold tracking-tight text-on-surface">Basic Info</h3>
+<span class="label-md uppercase tracking-widest text-on-surface-variant text-[10px]">Registry Identification</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Item Name</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors placeholder:text-stone-300" placeholder="e.g. 24k Gold Ingot" type="text"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Category</label>
+<select class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors">
+<option>Investment Grade Bars</option>
+<option>Numismatic Coins</option>
+<option>Raw Bullion</option>
+</select>
+</div>
+<div class="md:col-span-2 relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Internal Description</label>
+<textarea class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors placeholder:text-stone-300" placeholder="Archival details and unique markings..." rows="2"></textarea>
+</div>
+</div>
+</section>
+<!-- Section: Weight & Purity -->
+<section class="p-8 bg-white border border-outline-variant/20 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">scale</span>
+</div>
+<div class="flex items-baseline gap-4 mb-8">
+<h3 class="headline-sm font-bold tracking-tight text-on-surface">Weight &amp; Purity</h3>
+<span class="label-md uppercase tracking-widest text-on-surface-variant text-[10px]">Precision Measurements</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Gross Weight (g)</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors font-medium" step="0.001" type="number" value="100.000"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Purity (Karat)</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors font-medium" type="text" value="24K"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Fineness</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors font-medium" step="0.1" type="number" value="999.9"/>
+</div>
+</div>
+<!-- Auto-calculation Display -->
+<div class="mt-10 p-6 bg-stone-50 border-l-4 border-primary-container flex justify-between items-center">
+<div>
+<p class="label-md uppercase tracking-widest text-on-surface-variant text-[10px] mb-1">Calculated Net Pure Content</p>
+<h4 class="text-3xl font-black text-primary tracking-tighter">99.99 <span class="text-sm font-normal text-on-surface-variant">grams</span></h4>
+</div>
+<div class="text-right">
+<p class="label-md uppercase tracking-widest text-on-surface-variant text-[10px] mb-1">Market Value Est.</p>
+<p class="text-xl font-bold text-stone-800">$6,420.50</p>
+</div>
+</div>
+</section>
+<!-- Section: Costing & Supplier -->
+<section>
+<div class="flex items-baseline gap-4 mb-6">
+<h3 class="headline-sm font-bold tracking-tight text-on-surface">Costing &amp; Supplier</h3>
+<span class="label-md uppercase tracking-widest text-on-surface-variant text-[10px]">Procurement Data</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Acquisition Cost (USD)</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors" placeholder="0.00" type="number"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Supplier Name</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors" placeholder="Authorized Mint / Private Seller" type="text"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Reference #</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors" placeholder="PO-XXXXX" type="text"/>
+</div>
+<div class="relative">
+<label class="label-sm text-primary uppercase tracking-tighter font-bold mb-1 block">Arrival Date</label>
+<input class="w-full bg-surface-container-low border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 px-0 py-2 transition-colors" type="date"/>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Actions & Previews -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Asset Preview Card -->
+<div class="glass-panel p-6 shadow-xl">
+<div class="aspect-square bg-stone-100 mb-6 overflow-hidden flex items-center justify-center border border-outline-variant/30">
+<div class="text-center p-8">
+<span class="material-symbols-outlined text-4xl text-stone-300 mb-2">add_a_photo</span>
+<p class="text-xs uppercase tracking-widest text-stone-400 font-bold">Upload Asset Photo</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-2 border-b border-stone-200/40">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Asset ID</span>
+<span class="text-sm font-mono font-bold text-primary">GLD-2023-0882</span>
+</div>
+<div class="flex justify-between items-center pb-2 border-b border-stone-200/40">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Status</span>
+<span class="bg-primary/10 text-primary text-[10px] font-black px-2 py-0.5 uppercase tracking-tighter">Pending Audit</span>
+</div>
+</div>
+</div>
+<!-- Barcode Preview -->
+<div class="bg-white p-6 border border-stone-800 shadow-sm">
+<p class="text-xs uppercase tracking-widest text-stone-400 font-bold mb-4">Registry Barcode</p>
+<div class="bg-white flex flex-col items-center justify-center gap-2">
+<div class="w-full h-24 flex gap-1 items-end">
+<div class="w-1 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-2 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-1.5 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-1 bg-stone-900 h-full"></div>
+<div class="w-3 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-1.5 bg-stone-900 h-full"></div>
+<div class="w-2 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-1.5 bg-stone-900 h-full"></div>
+<div class="w-1 bg-stone-900 h-full"></div>
+<div class="w-2 bg-stone-900 h-full"></div>
+<div class="w-0.5 bg-stone-900 h-full"></div>
+<div class="w-1 bg-stone-900 h-full"></div>
+<div class="w-3 bg-stone-900 h-full"></div>
+<div class="w-1 bg-stone-900 h-full"></div>
+</div>
+<p class="font-mono text-[10px] font-bold tracking-[0.4em] text-stone-800">* GLD-2023-0882 *</p>
+</div>
+<button class="w-full mt-6 py-2 border border-stone-200 text-[10px] font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors">
+                            Print Label
+                        </button>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3">
+<button class="gold-gradient w-full py-4 text-white font-bold tracking-tight rounded-sm shadow-xl shadow-primary/20 hover:opacity-90 active:scale-95 transition-all uppercase text-sm">
+                            Commit to Vault
+                        </button>
+<button class="w-full py-4 border-2 border-outline-variant text-primary font-bold tracking-tight rounded-sm hover:bg-stone-50 transition-colors uppercase text-sm">
+                            Save as Draft
+                        </button>
+<button class="w-full py-3 text-error font-bold uppercase tracking-widest text-[10px] hover:underline underline-offset-4">
+                            Discard Entry
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Spacing -->
+<footer class="h-24"></footer>
+</main>
+<!-- Mobile Navigation (Bottom Bar) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-stone-200/20 px-4 py-2 flex justify-around items-center z-50">
+<a class="flex flex-col items-center gap-1 text-stone-400" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Vault</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-yellow-600" href="#">
+<span class="material-symbols-outlined">diamond</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Items</span>
+</a>
+<div class="w-12 h-12 gold-gradient rounded-full -mt-8 shadow-lg flex items-center justify-center text-white border-4 border-surface">
+<span class="material-symbols-outlined">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-stone-400" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Ledger</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-stone-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Profile</span>
+</a>
+</nav>
+</body></html>

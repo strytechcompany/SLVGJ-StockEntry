@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Asset | Gilded Inventory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface": "#f9f9f9",
+              "background": "#f9f9f9",
+              "on-error": "#ffffff",
+              "tertiary": "#5d5f5f",
+              "on-background": "#1a1c1c",
+              "surface-container-low": "#f3f3f3",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#e9c349",
+              "tertiary-container": "#b2b3b3",
+              "surface-dim": "#dadada",
+              "on-tertiary-fixed": "#1a1c1c",
+              "surface-container-high": "#e8e8e8",
+              "primary-fixed-dim": "#e9c349",
+              "inverse-surface": "#2f3131",
+              "on-tertiary": "#ffffff",
+              "on-secondary-container": "#656464",
+              "surface-container": "#eeeeee",
+              "secondary": "#5f5e5e",
+              "on-tertiary-fixed-variant": "#454747",
+              "on-secondary-fixed": "#1b1c1c",
+              "on-primary-container": "#554300",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#e2e2e2",
+              "outline": "#7f7663",
+              "on-tertiary-container": "#434546",
+              "primary-container": "#d4af37",
+              "primary": "#735c00",
+              "tertiary-fixed": "#e2e2e2",
+              "surface-tint": "#735c00",
+              "on-primary-fixed": "#241a00",
+              "tertiary-fixed-dim": "#c6c6c7",
+              "secondary-container": "#e4e2e1",
+              "inverse-on-surface": "#f0f1f1",
+              "primary-fixed": "#ffe088",
+              "error-container": "#ffdad6",
+              "on-surface": "#1a1c1c",
+              "outline-variant": "#d0c5af",
+              "secondary-fixed-dim": "#c8c6c5",
+              "secondary-fixed": "#e4e2e1",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-surface-variant": "#4d4635",
+              "surface-variant": "#e2e2e2",
+              "surface-bright": "#f9f9f9",
+              "on-primary-fixed-variant": "#574500",
+              "on-secondary-fixed-variant": "#474747"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Manrope", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .luxe-gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #735C00 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(208, 197, 175, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+<!-- Blurred Background Dashboard -->
+<div class="fixed inset-0 z-0 flex blur-md scale-105 pointer-events-none opacity-40">
+<!-- Sidebar Placeholder -->
+<aside class="w-64 bg-stone-50 border-r border-stone-200/20 flex flex-col py-6 px-4">
+<div class="mb-10 px-2">
+<div class="text-lg font-black text-stone-800 tracking-tighter">Aurelian Reserve</div>
+<div class="text-[10px] uppercase tracking-[0.2em] text-stone-400">Premium Management</div>
+</div>
+<nav class="space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 bg-white shadow-sm text-yellow-600 font-bold rounded-sm">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-xs uppercase tracking-widest">Vault</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-stone-400">
+<span class="material-symbols-outlined">diamond</span>
+<span class="text-xs uppercase tracking-widest">Collections</span>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area Placeholder -->
+<main class="flex-1 flex flex-col">
+<header class="flex justify-between items-center px-8 py-4 bg-white/80 border-b border-stone-200/20">
+<div class="font-manrope tracking-tight text-xl font-bold">Inventory</div>
+<div class="flex items-center gap-4">
+<div class="w-48 h-10 bg-surface-container rounded-full"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container"></div>
+</div>
+</header>
+<div class="p-8 grid grid-cols-12 gap-6">
+<div class="col-span-8 h-96 bg-surface-container-lowest rounded-sm"></div>
+<div class="col-span-4 h-96 bg-surface-container-lowest rounded-sm"></div>
+</div>
+</main>
+</div>
+<!-- Edit Product Overlay Layer -->
+<div class="fixed inset-0 z-10 flex items-center justify-center p-6 bg-on-background/10">
+<!-- Main Edit Canvas -->
+<div class="w-full max-w-5xl h-[870px] bg-surface-container-lowest shadow-2xl rounded-sm flex overflow-hidden relative border border-outline-variant/30">
+<!-- Left Panel: Asset Preview & Selection -->
+<div class="w-1/3 border-r border-surface-container bg-surface-container-low flex flex-col">
+<div class="p-8">
+<div class="label-md uppercase tracking-[0.2em] text-on-surface-variant mb-2">Asset Media</div>
+<div class="aspect-[4/5] bg-surface relative overflow-hidden rounded-sm group">
+<img class="w-full h-full object-cover" data-alt="Close-up of a high-end luxury mechanical watch with gold detailing and intricate dial, studio lighting on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA43jXswGw7fygB_FU4FTpTXTAiQLVX4f78dsNwURevz63Llb030QIBX42_s0dXWieQTpfWrV-Du3f07EFH47pxvLbEeIKoZFKTTeZkpOHJWUJV3xiI-5khTccfyt25PZrFWmmXYqCCDJ4IVxAUfSoZz-Oo8b0FHaWHCJFrC2e38sYv1qDXBfA8GKjh7zsDK-k4wiGc-j2E5ri-s9PTrozDq6yIJbMXxj-EDaOsaJbjorsJ69B6KpPwlLM22C4Iyy9kOQ57chD8EOU"/>
+<div class="absolute inset-0 bg-on-background/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-surface-container-lowest p-3 rounded-full text-primary shadow-lg">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-3 gap-2">
+<div class="aspect-square bg-surface-container-highest rounded-sm border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="Macro photo of a polished gold ring with a single clear diamond, soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3ap2eaN9X8h5QmJkRL1OGgRDpXmi6usQ9R0ewPMH5zQuqYjLGawcQzB7AW0fiNgeiUg6hLsqGZF6C0lQNC7KZZuXW3XfnULMsxYmOPcUoT69UdRPI3KfUbKuyVmlCqz7UiWALTJObjYxno3axbFKH3ej_jTHniDlhFYSXxYqIlwcZcoRjYkRDqnszmOOmOQRjPZQ0--NTjyQKI21g1bb0kVFwYEAwRMPtoeqOiqTp8zu8uRPtWEJk_jkWVYZiUqfbZxro-1kjajg"/>
+</div>
+<div class="aspect-square bg-surface-container border border-outline-variant/30 rounded-sm">
+<img class="w-full h-full object-cover" data-alt="Exotic leather material texture in deep brown, high quality craftsmanship detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAge8xCja3kzpSxeYvn1uoRVaPdN7bwwF-JtM9r8Om4oNmSWAJ1V4IE7gwAYQUyQiMLroWMsY7-2_Re_2RVOQIFbO14kfNaXY6198x1moVc-L-H3lB6pXKJtpfk29JheH-ESBur8QGh9G2Av8Ea3ibFtnJ6bHdkNELLILmNEoEvGv3B1SOnqwCy2XjyIKNBHqhE4h1LKPueT-T8t-KGaUqyAQupJcAAny09vmT3yJ9KoTOJJmu7IJbjQcmS33uXGnU3w1uMzGcBRmo"/>
+</div>
+<button class="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-outline-variant rounded-sm text-outline-variant hover:border-primary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">add</span>
+<span class="text-[10px] uppercase font-bold tracking-widest mt-1">Upload</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Panel: Information Editor -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<div class="px-10 py-8 border-b border-surface-container flex justify-between items-end">
+<div>
+<span class="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-bold">Modifying Entry</span>
+<h1 class="text-3xl font-headline font-bold tracking-tight text-on-surface">Patek Philippe Nautilus</h1>
+</div>
+<div class="text-right">
+<span class="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-bold">Estimated Value</span>
+<div class="text-2xl font-headline font-light text-primary tracking-tighter">$142,500.00</div>
+</div>
+</div>
+<!-- Form Area -->
+<div class="flex-1 overflow-y-auto p-10 space-y-10">
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="w-8 h-[1px] bg-primary"></span>
+<h2 class="text-xs uppercase tracking-[0.25em] font-black text-on-surface">Primary Details</h2>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Asset Name</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 px-1 text-on-surface" type="text" value="Patek Philippe Nautilus"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Reference ID</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 px-1 text-on-surface" type="text" value="5711/1R-001"/>
+</div>
+</div>
+</section>
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="w-8 h-[1px] bg-primary"></span>
+<h2 class="text-xs uppercase tracking-[0.25em] font-black text-on-surface">Curated Description</h2>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Editorial Note</label>
+<textarea class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 px-1 text-on-surface resize-none" rows="4">The Nautilus 5711 in rose gold is the pinnacle of the Genta design legacy. This specific piece features the chocolate brown dial with horizontal embossing and was acquired from a private collection in Geneva.</textarea>
+</div>
+</section>
+<section class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="w-8 h-[1px] bg-primary"></span>
+<h2 class="text-xs uppercase tracking-[0.25em] font-black text-on-surface">Valuation &amp; Metadata</h2>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Origin</label>
+<select class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 px-1 text-on-surface appearance-none">
+<option>Switzerland</option>
+<option>France</option>
+<option>United Kingdom</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Condition</label>
+<div class="flex gap-2 pt-2">
+<span class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-tighter">Mint</span>
+<span class="px-3 py-1 border border-outline-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-tighter">Fine</span>
+<span class="px-3 py-1 border border-outline-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-tighter">Used</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">Valuation Date</label>
+<input class="w-full bg-surface-container-low border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors py-3 px-1 text-on-surface" type="date" value="2023-10-15"/>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Actions -->
+<div class="px-10 py-8 bg-surface border-t border-surface-container flex justify-between items-center">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-error transition-colors group">
+<span class="material-symbols-outlined text-sm">delete</span>
+<span class="text-[10px] uppercase tracking-[0.2em] font-black">Archive Asset</span>
+</button>
+<div class="flex gap-4">
+<button class="px-8 py-3 text-[11px] uppercase tracking-[0.2em] font-black text-on-surface-variant hover:text-on-surface transition-colors">
+                            Cancel
+                        </button>
+<button class="luxe-gold-gradient px-10 py-3 text-[11px] uppercase tracking-[0.2em] font-black text-on-primary shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" id="commit-btn">
+                            Commit Changes
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Confirmation Modal (Over the Overlay) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-on-background/40 backdrop-blur-sm">
+<div class="w-full max-w-md glass-panel p-10 shadow-2xl relative overflow-hidden">
+<!-- Decorative Gold Edge -->
+<div class="absolute top-0 left-0 w-full h-1 luxe-gold-gradient"></div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface mb-2 tracking-tight">Finalize Transaction?</h3>
+<p class="text-sm text-on-surface-variant mb-10 leading-relaxed px-4">
+                    Confirming will update the global ledger for <span class="text-on-surface font-bold">Patek Philippe Nautilus</span>. This action is immutable in the current audit cycle.
+                </p>
+<div class="w-full flex flex-col gap-3">
+<button class="luxe-gold-gradient w-full py-4 text-xs uppercase tracking-[0.25em] font-black text-on-primary shadow-md hover:opacity-90 transition-opacity">
+                        Confirm &amp; Record
+                    </button>
+<button class="w-full py-4 text-xs uppercase tracking-[0.25em] font-black text-on-surface-variant hover:bg-surface-container transition-colors">
+                        Return to Editor
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- FAB for quick context (Suppressed according to rules for detailed/transactional screens, but included if this were the main vault) -->
+<!-- Suppressed -->
+</body></html>
