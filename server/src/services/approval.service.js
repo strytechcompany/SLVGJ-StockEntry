@@ -95,9 +95,17 @@ async function verifyAndConsume({ pendingId, code }) {
 
 async function listPending() {
   return get && (await require("../db/client").all(
-    `SELECT id, action_type, product_id, status, attempts, expires_at, created_at, resolved_at
-     FROM pending_actions
-     ORDER BY created_at DESC
+    `SELECT
+       pa.id, pa.action_type, pa.product_id, pa.status,
+       pa.attempts, pa.expires_at, pa.created_at, pa.resolved_at,
+       pa.requested_by,
+       COALESCE(
+         (SELECT COUNT(*) FROM products p
+          WHERE p.added_by = pa.requested_by AND p.status != 'deleted'),
+         0
+       ) AS items_added
+     FROM pending_actions pa
+     ORDER BY pa.created_at DESC
      LIMIT 100`
   ));
 }

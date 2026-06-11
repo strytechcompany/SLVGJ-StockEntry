@@ -39,14 +39,38 @@ async function startServer({ port = config.apiPort } = {}) {
   reportScheduler.start();
 
   const app = createApp();
-  const server = app.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`[server] listening on http://localhost:${port}`);
-    // eslint-disable-next-line no-console
-    console.log(`[server] db: ${config.dbPath}`);
-    // eslint-disable-next-line no-console
-    console.log(`[server] email configured: ${config.isEmailConfigured()}`);
-  });
+
+  // Wrap listen in a Promise so EADDRINUSE (port already taken by a previous
+  // crashed Electron instance) is caught and retried once after a short delay.
+  async function listenWithRetry(retries = 1) {
+    return new Promise((resolve, reject) => {
+      const srv = app.listen(port, () => {
+        // eslint-disable-next-line no-console
+        console.log(`[server] listening on http://localhost:${port}`);
+        // eslint-disable-next-line no-console
+        console.log(`[server] db: ${config.dbPath}`);
+        // eslint-disable-next-line no-console
+        console.log(`[server] email configured: ${config.isEmailConfigured()}`);
+        resolve(srv);
+      });
+      srv.once("error", (err) => {
+        if (err.code === "EADDRINUSE" && retries > 0) {
+          // eslint-disable-next-line no-console
+          console.warn(`[server] port ${port} in use — retrying in 2s…`);
+          srv.close();
+          setTimeout(() => {
+            listenWithRetry(retries - 1).then(resolve).catch(reject);
+          }, 2000);
+        } else {
+          // eslint-disable-next-line no-console
+          console.error(`[server] failed to start on port ${port}:`, err.message);
+          reject(err);
+        }
+      });
+    });
+  }
+
+  const server = await listenWithRetry(2);
   return { app, server };
 }
 

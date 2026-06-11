@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { getProductById, requestEdit, confirmEdit } from "../api/products.api";
+import { useAuth } from "../contexts/AuthContext";
 import { ProductForm } from "../components/features/ProductForm";
 import { ApprovalCodeModal } from "../components/features/ApprovalCodeModal";
 import { Button } from "../components/ui/Button";
@@ -8,6 +9,7 @@ import { Button } from "../components/ui/Button";
 export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { staffName } = useAuth();
 
   const [form, setForm] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,7 @@ export default function EditProduct() {
         open={approvalOpen}
         purpose="edit"
         productName={form.name}
-        onRequest={() => requestEdit(form.product_id, form)}
+        onRequest={() => requestEdit(form.product_id, form, staffName)}
         onVerify={async (pendingId, code) => {
           await confirmEdit(form.product_id, pendingId, code);
         }}

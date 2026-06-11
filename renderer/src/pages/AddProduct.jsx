@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { createProduct } from "../api/products.api";
+import { useAuth } from "../contexts/AuthContext";
 import { ProductForm, emptyProduct } from "../components/features/ProductForm";
 import { Button } from "../components/ui/Button";
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const { staffName } = useAuth();
   const [form, setForm] = useState(emptyProduct());
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -15,11 +17,20 @@ export default function AddProduct() {
     setBusy(true);
     setError("");
     try {
-      const created = await createProduct(form);
+      const created = await createProduct({ ...form, staffName: staffName || "Staff" });
       // Jump to detail page with autoPrint flag so the label fires once.
       navigate(`/products/${created.product_id}?autoPrint=1`);
     } catch (err) {
-      setError(err.message || "Failed to save product");
+      // "Failed to fetch" means the local API server (port 3001) is unreachable.
+      const isNetworkError =
+        err.message?.toLowerCase().includes("failed to fetch") ||
+        err.message?.toLowerCase().includes("networkerror") ||
+        err.message?.toLowerCase().includes("load failed");
+      setError(
+        isNetworkError
+          ? "Cannot reach the server — please restart the app and try again."
+          : err.message || "Failed to save product"
+      );
     } finally {
       setBusy(false);
     }

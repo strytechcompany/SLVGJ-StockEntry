@@ -17,10 +17,10 @@ export function createProduct(payload) {
   return apiFetch("/products", { method: "POST", body: payload });
 }
 
-export function requestEdit(productId, payload) {
+export function requestEdit(productId, payload, staffName) {
   return apiFetch(`/products/${encodeURIComponent(productId)}/edit/request`, {
     method: "POST",
-    body: payload,
+    body: { ...payload, staffName: staffName || "Staff" },
   });
 }
 
@@ -31,10 +31,10 @@ export function confirmEdit(productId, pendingId, code) {
   });
 }
 
-export function requestDelete(productId) {
+export function requestDelete(productId, staffName) {
   return apiFetch(`/products/${encodeURIComponent(productId)}/delete/request`, {
     method: "POST",
-    body: {},
+    body: { staffName: staffName || "Staff" },
   });
 }
 

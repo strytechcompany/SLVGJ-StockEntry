@@ -61,23 +61,26 @@ function renderApprovalEmail({ purpose, code, context }) {
     delete: "Delete product",
   };
   const label = purposeLabels[purpose] || "Action";
+  const staffName = context?.staffName || "Staff";
 
-  const contextHtml = context
-    ? `<p style="margin:16px 0 0 0;color:#553344;font-size:13px;">
-         <strong>Details:</strong><br>
-         <code style="background:#FFF1F6;padding:8px;display:block;border-radius:6px;color:#9D174D;">${escapeHtml(
-           JSON.stringify(context, null, 2)
-         )}</code>
-       </p>`
-    : "";
+
 
   return `
     <div style="font-family:Inter,sans-serif;background:#FFFBF7;padding:32px;">
       <div style="max-width:480px;margin:0 auto;background:#FFFFFF;border:1px solid #FFE0EC;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(236,72,153,0.08);">
-        <h1 style="color:#BE185D;font-size:20px;margin:0 0 8px 0;">${label} approval</h1>
-        <p style="color:#553344;font-size:14px;margin:0 0 24px 0;">
-          Your staff is requesting permission to perform an action in the Stock Entry app.
-          Share this code with them only if you approve.
+        <h1 style="color:#BE185D;font-size:20px;margin:0 0 4px 0;">Sri Lakshmi Vinayaka Golden Jewellery</h1>
+        <p style="color:#8A6B7A;font-size:13px;margin:0 0 20px 0;">${label} approval request</p>
+
+        <div style="background:#FFF8EC;border-left:4px solid #D97706;border-radius:8px;padding:16px 20px;margin:0 0 20px 0;">
+          <p style="margin:0;font-size:16px;color:#92400E;font-weight:700;">
+            <span style="font-size:20px;">👤</span>&nbsp;
+            <strong style="color:#B45309;">${escapeHtml(staffName)}</strong>
+            is requesting login
+          </p>
+        </div>
+
+        <p style="color:#553344;font-size:14px;margin:0 0 20px 0;">
+          Share this one-time code with <strong>${escapeHtml(staffName)}</strong> only if you approve this login request. Do not share it if you did not expect this.
         </p>
         <div style="font-size:42px;letter-spacing:8px;font-weight:800;color:#EC4899;background:#FFF1F6;border:2px dashed #FB6FA3;border-radius:12px;padding:24px;text-align:center;font-family:'Courier New',monospace;">
           ${code}
@@ -85,7 +88,6 @@ function renderApprovalEmail({ purpose, code, context }) {
         <p style="color:#8A6B7A;font-size:12px;margin:16px 0 0 0;text-align:center;">
           This code expires in ${config.approval.codeTtlMinutes} minutes.
         </p>
-        ${contextHtml}
       </div>
     </div>`;
 }
@@ -98,9 +100,13 @@ function escapeHtml(s) {
 }
 
 async function sendApprovalCode({ purpose, code, context }) {
+  const staffName = context?.staffName || "Staff";
+  const subjectLabel = purpose === "login"
+    ? `${staffName} is requesting login`
+    : `${purpose} approval`;
   return sendMail({
     to: config.email.ownerEmail,
-    subject: `Stock Entry — ${purpose} approval code: ${code}`,
+    subject: `Sri Lakshmi Vinayaka — ${subjectLabel} (code: ${code})`,
     html: renderApprovalEmail({ purpose, code, context }),
     text: `Approval code for ${purpose}: ${code} (valid ${config.approval.codeTtlMinutes} minutes)`,
   });

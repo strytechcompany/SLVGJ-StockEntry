@@ -1,7 +1,7 @@
 import { apiFetch } from "./http";
 
-export function requestLogin() {
-  return apiFetch("/auth/login/request", { method: "POST", body: {} });
+export function requestLogin(staffName) {
+  return apiFetch("/auth/login/request", { method: "POST", body: { staffName } });
 }
 
 export function verifyLogin(pendingId, code) {

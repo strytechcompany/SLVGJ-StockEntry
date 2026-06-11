@@ -4,13 +4,13 @@ import { useSaleAlerts } from "../../hooks/useSaleAlerts";
 import { Toaster } from "../ui/Toaster";
 
 const NAV = [
-  { to: "/",         label: "Dashboard",        icon: "dashboard" },
-  { to: "/add",      label: "New Entry",        icon: "inventory_2" },
-  { to: "/pending",  label: "Pending Approvals",icon: "pending_actions" },
+  { to: "/",        label: "Dashboard",        icon: "dashboard" },
+  { to: "/add",     label: "New Entry",        icon: "inventory_2" },
+  { to: "/pending", label: "Pending Approvals", icon: "pending_actions" },
 ];
 
 export function AppShell({ children, onSaleEvent }) {
-  const { logout } = useAuth();
+  const { logout, staffName } = useAuth();
   const navigate = useNavigate();
   const { events, dismiss } = useSaleAlerts({ enabled: true });
 
@@ -24,6 +24,11 @@ export function AppShell({ children, onSaleEvent }) {
     navigate("/login", { replace: true });
   }
 
+  // Derive initials for the avatar badge
+  const initials = staffName
+    ? staffName.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+    : "ST";
+
   return (
     <div className="min-h-screen bg-cream-50 text-ink-900">
       <Toaster events={events} onDismiss={dismiss} />
@@ -35,10 +40,51 @@ export function AppShell({ children, onSaleEvent }) {
             <span className="material-symbols-outlined text-primary-500 text-2xl">diamond</span>
             Stock Entry
           </Link>
+          <div style={{
+            fontFamily: "'Georgia', 'Times New Roman', serif",
+            fontSize: "30px",
+            fontWeight: "800",
+            lineHeight: "1.2",
+            background: "linear-gradient(135deg, #8A339D 0%, #D97706 50%, #EC4899 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            letterSpacing: "0.01em",
+          }}>
+            Shri Lakshmi Vinayaka Golden Jewellery
+            <span style={{ fontSize: "13px", letterSpacing: "0.03em" }}></span>
+          </div>
+
+          {/* Right: staff name badge + logout */}
           <div className="flex items-center gap-3">
-            <span className="hidden md:inline text-[11px] font-bold uppercase tracking-widest text-ink-500">
-              Signed in as Staff
-            </span>
+            {staffName && (
+              <div className="flex items-center gap-2">
+                {/* Avatar circle */}
+                <div
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #D97706, #EC4899)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <span style={{ fontSize: "12px", fontWeight: "800", color: "#fff" }}>{initials}</span>
+                </div>
+                {/* Name pill */}
+                <div className="hidden md:flex flex-col leading-none">
+                  <span style={{ fontSize: "10px", fontWeight: "600", color: "#9D174D", textTransform: "uppercase", letterSpacing: "0.07em" }}>
+                    Signed in as
+                  </span>
+                  <span style={{ fontSize: "13px", fontWeight: "700", color: "#B45309" }}>
+                    {staffName}
+                  </span>
+                </div>
+              </div>
+            )}
             <button
               onClick={handleLogout}
               className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-primary-700 hover:bg-primary-50 rounded-lg border border-primary-200 transition"

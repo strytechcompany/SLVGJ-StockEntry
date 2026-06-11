@@ -6,6 +6,7 @@ import {
   requestDelete,
   confirmDelete,
 } from "../api/products.api";
+import { useAuth } from "../contexts/AuthContext";
 import { useDashboardStats } from "../hooks/useDashboardStats";
 import { StatCard } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
@@ -30,6 +31,7 @@ function fmtDate(value) {
 
 export default function Dashboard({ saleNonce = 0 }) {
   const navigate = useNavigate();
+  const { staffName } = useAuth();
   const [status, setStatus] = useState("in_stock");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -211,7 +213,7 @@ export default function Dashboard({ saleNonce = 0 }) {
         open={!!deleteTarget}
         purpose="delete"
         productName={deleteTarget?.name}
-        onRequest={() => requestDelete(deleteTarget.product_id)}
+        onRequest={() => requestDelete(deleteTarget.product_id, staffName)}
         onVerify={async (pendingId, code) => {
           await confirmDelete(deleteTarget.product_id, pendingId, code);
         }}

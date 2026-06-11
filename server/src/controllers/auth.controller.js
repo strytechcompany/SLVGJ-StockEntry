@@ -2,14 +2,15 @@ const { createPendingAction, verifyAndConsume } = require("../services/approval.
 const { createSession, destroy } = require("../services/session.service");
 const { logAudit } = require("../services/audit.service");
 
-async function requestLogin(_req, res) {
+async function requestLogin(req, res) {
   try {
+    const { staffName } = req.body || {};
     const result = await createPendingAction({
       actionType: "login",
       productId: null,
       payload: null,
-      requestedBy: "staff",
-      context: { reason: "Staff login attempt" },
+      requestedBy: staffName || "Staff",
+      context: { reason: "Staff login attempt", staffName: staffName || "Staff" },
     });
     return res.status(202).json(result);
   } catch (err) {

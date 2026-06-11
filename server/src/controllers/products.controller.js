@@ -63,22 +63,24 @@ async function createProduct(req, res) {
     const data = buildProductPayload(req.body);
     if (!data.name) return res.status(400).json({ error: "name is required" });
 
+    const addedBy = req.body?.staffName || null;
+
     await run(
       `INSERT INTO products (
         product_id, name, barcode,
         gross_weight, stone_weight, net_weight,
         purity, buying_cost, bore_rate, supplier_name,
-        price_per_gram, making_charge, stock, status
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 'in_stock')`,
+        price_per_gram, making_charge, stock, status, added_by
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 'in_stock', ?)`,
       [
         product_id, data.name, barcode,
         data.gross_weight, data.stone_weight, data.net_weight,
         data.purity, data.buying_cost, data.bore_rate, data.supplier_name,
-        data.price_per_gram, data.making_charge,
+        data.price_per_gram, data.making_charge, addedBy,
       ]
     );
 
-    await logAudit({ actor: "staff", action: "create", productId: product_id, details: { name: data.name } });
+    await logAudit({ actor: addedBy || "staff", action: "create", productId: product_id, details: { name: data.name } });
 
     const created = await get("SELECT * FROM products WHERE product_id = ?", [product_id]);
     return res.status(201).json(created);
@@ -145,10 +147,12 @@ async function requestEdit(req, res) {
     const proposed = buildProductPayload(req.body, existing);
     if (!proposed.name) return res.status(400).json({ error: "name is required" });
 
+    const staffName = req.body?.staffName || "Staff";
     const result = await createPendingAction({
       actionType: "edit",
       productId: id,
       payload: proposed,
+      requestedBy: staffName,
       context: { product_name: existing.name, changes: proposed },
     });
     return res.status(202).json(result);
@@ -199,10 +203,12 @@ async function requestDelete(req, res) {
     const existing = await get("SELECT * FROM products WHERE product_id = ?", [id]);
     if (!existing) return res.status(404).json({ error: "Product not found" });
 
+    const staffName = req.body?.staffName || "Staff";
     const result = await createPendingAction({
       actionType: "delete",
       productId: id,
       payload: null,
+      requestedBy: staffName,
       context: { product_name: existing.name, product_id: id },
     });
     return res.status(202).json(result);

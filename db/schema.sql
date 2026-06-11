@@ -36,7 +36,10 @@ CREATE TABLE IF NOT EXISTS products (
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     sold_at         TIMESTAMP,
-    deleted_at      TIMESTAMP
+    deleted_at      TIMESTAMP,
+
+    -- Staff tracking
+    added_by        TEXT                              -- staff name who created this entry
 );
 
 CREATE INDEX IF NOT EXISTS idx_products_status     ON products(status);
